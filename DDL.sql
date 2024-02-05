@@ -173,3 +173,80 @@ VALUES
         "Made 4 jars of overnight oats for myself only. please do not eat",
         SELECT owner_id FROM Owners WHERE owner_name = "Justin Pham"
     );
+
+INSERT INTO Groceries_Owners (
+    grocery_id,
+    owner_id
+)
+VALUES
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats",
+    SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats",
+    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats",
+    SELECT owner_id FROM Owners WHERE owner_name="Bean"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Greek Yogurt",
+    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Honey",
+    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Honey",
+    SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Honey",
+    SELECT owner_id FROM Owners WHERE owner_name="Bean"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk",
+    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk",
+    SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan"
+);
+
+INSERT INTO Activity_Logs_Groceries
+(
+    grocery_id,
+    activity_id
+)
+VALUES
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name = "Rolled Oats",
+    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Added Groceries"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name = "Greek Yogurt",
+    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Added Groceries"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name = "Honey",
+    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Duyen Added Groceries"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name = "Rolled Oats",
+    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name = "Greek Yogurt",
+    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name = "Honey",
+    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
+),
+(
+    SELECT grocery_id FROM Groceries WHERE grocery_name = "Almond Milk",
+    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
+);
