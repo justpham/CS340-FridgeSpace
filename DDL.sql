@@ -1,80 +1,72 @@
-
 /*
     Main Entity Tables
 */
 
-CREATE OR REPLACE TABLE Groceries (
-    --Attributes--
-    grocery_id          int not NULL UNIQUE AUTO_INCREMENT,       
-    grocery_name        varchar(255) not NULL,
-    grocery_category    int not NULL,
-    expiration_date     date NULL,
-    remaining:          tinyint(1) not NULL DEFAULT Yes,
-
-    --Constraints--
-    PRIMARY KEY (grocery_id),
+CREATE TABLE IF NOT EXISTS Groceries (
+    -- Attributes --
+    grocery_id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    grocery_name        VARCHAR(255) NOT NULL,
+    grocery_category    INT NOT NULL,
+    expiration_date     DATE NULL,
+    remaining           TINYINT(1) NOT NULL DEFAULT 1, -- Assuming 'Yes' is meant to indicate remaining
+    -- Constraints --
     FOREIGN KEY (grocery_category) REFERENCES Grocery_Categories(category_id)
 );
 
-CREATE OR REPLACE TABLE Grocery_Categories (
-    --Attributes--
-    category_id         int not NULL UNIQUE AUTO_INCREMENT,
-    category_name       varchar(255);
-
-    --Constraints
+-- Create or Replace the Grocery_Categories table --
+CREATE TABLE IF NOT EXISTS Grocery_Categories (
+    -- Attributes --
+    category_id         INT NOT NULL AUTO_INCREMENT UNIQUE,
+    category_name       VARCHAR(255) NOT NULL,
+    -- Constraints --
     PRIMARY KEY (category_id)
 );
 
-CREATE OR REPLACE TABLE Owners (
-    --Attributes--
-    owner_id            int not NULL UNIQUE AUTO_INCREMENT,
-    owner_name          varchar(255) not NULL,
-    email               varchar(255) not NULL,
-
-    --Constraints--
+-- Create or Replace the Owners table --
+CREATE TABLE IF NOT EXISTS Owners (
+    -- Attributes --
+    owner_id            INT NOT NULL AUTO_INCREMENT UNIQUE,
+    owner_name          VARCHAR(255) NOT NULL,
+    email               VARCHAR(255) NOT NULL,
+    -- Constraints --
     PRIMARY KEY (owner_id)
 );
 
-CREATE OR REPLACE TABLE Activity_Logs (
-    --Attributes--
-    activity_id         int not NULL UNIQUE AUTO_INCREMENT,
-    activity_name       varchar(255) not NULL,
+-- Create or Replace the Activity_Logs table --
+CREATE TABLE IF NOT EXISTS Activity_Logs (
+    -- Attributes --
+    activity_id         INT NOT NULL AUTO_INCREMENT UNIQUE,
+    activity_name       VARCHAR(255) NOT NULL,
     description         TEXT NULL,
-    owner_id            int not NULL,
-
-    --Constraints--
+    owner_id            INT NOT NULL,
+    -- Constraints --
     PRIMARY KEY (activity_id),
     FOREIGN KEY (owner_id) REFERENCES Owners(owner_id)
-
 );
 
 /*
     Intersection Tables
 */
 
-CREATE OR REPLACE TABLE Groceries_Owners
-(
-    --Attributes--
-    groceries_owners_id int not NULL UNIQUE AUTO_INCREMENT,
-    grocery_id          int not NULL,
-    owner_id            int not NULL,
-
-    --Constraints--
-    PRIMARY KEY (groceries_owners_id)
-    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id)
+CREATE TABLE IF NOT EXISTS Groceries_Owners (
+    -- Attributes --
+    groceries_owners_id INT NOT NULL AUTO_INCREMENT UNIQUE,
+    grocery_id          INT NOT NULL,
+    owner_id            INT NOT NULL,
+    -- Constraints --
+    PRIMARY KEY (groceries_owners_id),
+    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id),
     FOREIGN KEY (owner_id) REFERENCES Owners(owner_id)
 );
 
-CREATE OR REPLACE TABLE Activity_Logs_Groceries
-(
-    --Attributes--
-    activity_logs_groceries_id  int not NULL UNIQUE AUTO_INCREMENT,
-    grocery_id                  int not NULL,
-    activity_id                 int not NULL,
-
-    --Constraints--
-    PRIMARY KEY (groceries_owners_id)
-    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id)
+CREATE TABLE IF NOT EXISTS Activity_Logs_Groceries (
+    -- Attributes --
+    activity_logs_groceries_id INT NOT NULL AUTO_INCREMENT UNIQUE,
+    grocery_id                 INT NOT NULL,
+    activity_id                INT NOT NULL,
+    -- Constraints --
+    PRIMARY KEY (activity_logs_groceries_id),
+    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id),
     FOREIGN KEY (activity_id) REFERENCES Activity_Logs(activity_id)
 );
 
@@ -82,10 +74,8 @@ CREATE OR REPLACE TABLE Activity_Logs_Groceries
     Example Data
 */
 
-INSERT INTO Grocery_Categories
-    (
-        category_name
-    )
+-- Insert into Grocery_Categories table --
+INSERT INTO Grocery_Categories (category_name)
 VALUES
     ("Dairy"),
     ("Meat"),
@@ -102,151 +92,48 @@ VALUES
     ("Spices"),
     ("Others");
 
-
-INSERT INTO Groceries
-    (
-        grocery_name,
-        grocery_category,
-        expiration_date,
-    )
+-- Insert into Groceries table --
+INSERT INTO Groceries (grocery_name, grocery_category, expiration_date)
 VALUES
-    (
-        "Rolled Oats",
-        SELECT category_id FROM Grocery_Categories WHERE category_name = "Breakfast Items",
-        NULL
-    ),
-    (
-        "Greek Yogurt",
-        SELECT category_id FROM Grocery_Categories WHERE category_name = "Dairy",
-        2024-02-14
-    ),
-    (
-        "Almond Milk",
-        SELECT category_id FROM Grocery_Categories WHERE category_name = "Breakfast Items",
-        2024-03-01
-    ),
-    (
-        "Honey",
-        SELECT category_id FROM Grocery_Categories WHERE category_name = "Condiments",
-        NULL
-    );
+    ("Rolled Oats", (SELECT category_id FROM Grocery_Categories WHERE category_name = "Breakfast Items"), NULL),
+    ("Greek Yogurt", (SELECT category_id FROM Grocery_Categories WHERE category_name = "Dairy"), '2024-02-14'),
+    ("Almond Milk", (SELECT category_id FROM Grocery_Categories WHERE category_name = "Breakfast Items"), '2024-03-01'),
+    ("Honey", (SELECT category_id FROM Grocery_Categories WHERE category_name = "Condiments"), NULL);
 
-INSERT INTO Owners
-    (
-        owner_name,
-        email
-    )
+-- Insert into Owners table --
+INSERT INTO Owners (owner_name, email)
 VALUES
-    (
-        "Justin Pham",
-        "phamjus@oregonstate.edu"
-    ),
-    (
-        "Thuy Duyen Doan",
-        "doant@oregonstate.edu"
-    ),
-    (
-        "Bean",
-        "mydoglol2014@gmail.com"
-    );
+    ("Justin Pham", "phamjus@oregonstate.edu"),
+    ("Thuy Duyen Doan", "doant@oregonstate.edu"),
+    ("Bean", "mydoglol2014@gmail.com");
 
-
-INSERT INTO Activity_Logs
-    (
-        activity_name,
-        description,
-        owner_id
-    )
+-- Insert into Activity_Logs table --
+INSERT INTO Activity_Logs (activity_name, description, owner_id)
 VALUES
-    (
-        "Justin Added Groceries",
-        "Items Added: Rolled Oats, Greek Yogurt. Greek Yogurt for me (Justin) but Rolled Oats for Everybody",
-        SELECT owner_id FROM Owners WHERE owner_name = "Justin Pham"
-    ),
-    (
-        "Duyen Added Groceries",
-        "Items Added: Honey. Everybody will be able to use it",
-        SELECT owner_id FROM Owners WHERE owner_name = "Thuy Duyen Doan"
-    ),
-    (
-        "Justin Used 4 Groceries",
-        "Made 4 jars of overnight oats for myself only. please do not eat",
-        SELECT owner_id FROM Owners WHERE owner_name = "Justin Pham"
-    );
+    ("Justin Added Groceries", "Items Added: Rolled Oats, Greek Yogurt. Greek Yogurt for me (Justin) but Rolled Oats for Everybody", (SELECT owner_id FROM Owners WHERE owner_name = "Justin Pham")),
+    ("Duyen Added Groceries", "Items Added: Honey. Everybody will be able to use it", (SELECT owner_id FROM Owners WHERE owner_name = "Thuy Duyen Doan")),
+    ("Justin Used 4 Groceries", "Made 4 jars of overnight oats for myself only. please do not eat", (SELECT owner_id FROM Owners WHERE owner_name = "Justin Pham"));
 
-INSERT INTO Groceries_Owners (
-    grocery_id,
-    owner_id
-)
+-- Insert into Groceries_Owners table --
+INSERT INTO Groceries_Owners (grocery_id, owner_id)
 VALUES
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats",
-    SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats",
-    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats",
-    SELECT owner_id FROM Owners WHERE owner_name="Bean"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Greek Yogurt",
-    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Honey",
-    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Honey",
-    SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Honey",
-    SELECT owner_id FROM Owners WHERE owner_name="Bean"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk",
-    SELECT owner_id FROM Owners WHERE owner_name="Justin Pham"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk",
-    SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan"
-);
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats"), (SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats"), (SELECT owner_id FROM Owners WHERE owner_name="Justin Pham")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats"), (SELECT owner_id FROM Owners WHERE owner_name="Bean")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Greek Yogurt"), (SELECT owner_id FROM Owners WHERE owner_name="Justin Pham")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Honey"), (SELECT owner_id FROM Owners WHERE owner_name="Justin Pham")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Honey"), (SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Honey"), (SELECT owner_id FROM Owners WHERE owner_name="Bean")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk"), (SELECT owner_id FROM Owners WHERE owner_name="Justin Pham")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk"), (SELECT owner_id FROM Owners WHERE owner_name="Thuy Duyen Doan"));
 
-INSERT INTO Activity_Logs_Groceries
-(
-    grocery_id,
-    activity_id
-)
+-- Insert into Activity_Logs_Groceries table --
+INSERT INTO Activity_Logs_Groceries (grocery_id, activity_id)
 VALUES
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name = "Rolled Oats",
-    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Added Groceries"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name = "Greek Yogurt",
-    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Added Groceries"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name = "Honey",
-    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Duyen Added Groceries"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name = "Rolled Oats",
-    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name = "Greek Yogurt",
-    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name = "Honey",
-    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
-),
-(
-    SELECT grocery_id FROM Groceries WHERE grocery_name = "Almond Milk",
-    SELECT activity_id FROM Activity_Logs WHERE Activity_name = "Justin Used 4 Groceries"
-);
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Rolled Oats"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Added Groceries")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Greek Yogurt"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Added Groceries")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Honey"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Duyen Added Groceries")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Rolled Oats"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Greek Yogurt"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Honey"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Almond Milk"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries"));
