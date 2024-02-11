@@ -1,0 +1,8 @@
+
+1. Make forms post to a URI to be connected to database
+
+2. Get Grocery Categories from Database and put them into the Create Grocery drop down list and Update Grocery drop down list
+
+3. Get Groceries from Database and put them into the Update Grocery drop down list
+
+4. Make Delete button work by connecting it to URI (POST request maybe?)
