@@ -1,4 +1,3 @@
-
 /*
     Main Entity Tables
 */
@@ -11,9 +10,23 @@ CREATE TABLE IF NOT EXISTS Groceries (
     expiration_date     DATE NULL,
     remaining           TINYINT(1) NOT NULL DEFAULT 1, -- Assuming 'Yes' is meant to indicate remaining
     -- Constraints --
+CREATE TABLE IF NOT EXISTS Groceries (
+    -- Attributes --
+    grocery_id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    grocery_name        VARCHAR(255) NOT NULL,
+    grocery_category    INT NOT NULL,
+    expiration_date     DATE NULL,
+    remaining           TINYINT(1) NOT NULL DEFAULT 1, -- Assuming 'Yes' is meant to indicate remaining
+    -- Constraints --
     FOREIGN KEY (grocery_category) REFERENCES Grocery_Categories(category_id)
 );
 
+-- Create or Replace the Grocery_Categories table --
+CREATE TABLE IF NOT EXISTS Grocery_Categories (
+    -- Attributes --
+    category_id         INT NOT NULL AUTO_INCREMENT UNIQUE,
+    category_name       VARCHAR(255) NOT NULL,
+    -- Constraints --
 -- Create or Replace the Grocery_Categories table --
 CREATE TABLE IF NOT EXISTS Grocery_Categories (
     -- Attributes --
@@ -58,9 +71,25 @@ CREATE TABLE IF NOT EXISTS Groceries_Owners (
     -- Constraints --
     PRIMARY KEY (groceries_owners_id),
     FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id),
+CREATE TABLE IF NOT EXISTS Groceries_Owners (
+    -- Attributes --
+    groceries_owners_id INT NOT NULL AUTO_INCREMENT UNIQUE,
+    grocery_id          INT NOT NULL,
+    owner_id            INT NOT NULL,
+    -- Constraints --
+    PRIMARY KEY (groceries_owners_id),
+    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id),
     FOREIGN KEY (owner_id) REFERENCES Owners(owner_id)
 );
 
+CREATE TABLE IF NOT EXISTS Activity_Logs_Groceries (
+    -- Attributes --
+    activity_logs_groceries_id INT NOT NULL AUTO_INCREMENT UNIQUE,
+    grocery_id                 INT NOT NULL,
+    activity_id                INT NOT NULL,
+    -- Constraints --
+    PRIMARY KEY (activity_logs_groceries_id),
+    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id),
 CREATE TABLE IF NOT EXISTS Activity_Logs_Groceries (
     -- Attributes --
     activity_logs_groceries_id INT NOT NULL AUTO_INCREMENT UNIQUE,
@@ -76,6 +105,8 @@ CREATE TABLE IF NOT EXISTS Activity_Logs_Groceries (
     Example Data
 */
 
+-- Insert into Grocery_Categories table --
+INSERT INTO Grocery_Categories (category_name)
 -- Insert into Grocery_Categories table --
 INSERT INTO Grocery_Categories (category_name)
 VALUES
