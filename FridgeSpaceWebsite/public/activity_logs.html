@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <nav>
@@ -24,5 +26,62 @@
     </nav>
 
     <h1>Activity Logs</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Activity Name</th>
+            <th>Description</th>
+            <th>Owner ID</th>
+
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Dairy</td>
+            <td>Dairy</td>
+            <td>Dairy</td>
+            <td><button type="button">Delete</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Leftover</td>
+            <td>Dairy</td>
+            <td>Dairy</td>
+            <td><button type="button">Delete</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Fruit</td>
+            <td>Dairy</td>
+            <td>Dairy</td>
+            <td><button class="button" type="button">Delete</button></td>
+            <!-- <td><button class="delete-x">x</button></td> -->
+        </tr>
+    </table>
+
+    <div class="section">
+        <form id="create-log">
+            <fieldset>
+                <legend> <h2>Add An Activity Log</h2> </legend>
+                <label for="acti_name">Activity Name:</label>
+                <input type="text" id="aname" name="aname" required><br><br>
+
+                <div class="descri-container">
+                    <label for="acti_descri">Activity Description:</label>
+                    <textarea id="descri" name="descri" required rows="4" cols="30"></textarea> <br><br>
+                </div>
+
+                <label for="select-owner">Owner:</label>
+                    <select name="owner-name" id="owner-name" required>
+                        <option value="">Select an owner...</option>
+                        <option value="owner1">Justin Pham</option>
+                        <option value="owner2">Duyen Doan</option>
+                        <option value="owner3">Bean Pham</option>
+                    </select> <br> <br>
+                
+                <input type="submit" value="Submit">
+            </fieldset>
+            
+        </form>
 </body>
 </html>
