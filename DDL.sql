@@ -76,8 +76,6 @@ CREATE TABLE IF NOT EXISTS Activity_Logs_Groceries (
 
 -- Insert into Grocery_Categories table --
 INSERT INTO Grocery_Categories (category_name)
--- Insert into Grocery_Categories table --
-INSERT INTO Grocery_Categories (category_name)
 VALUES
     ("Dairy"),
     ("Meat"),
@@ -138,4 +136,4 @@ VALUES
     ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Rolled Oats"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries")),
     ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Greek Yogurt"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries")),
     ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Honey"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries")),
-    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Almond Milk"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries"));5
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name = "Almond Milk"), (SELECT activity_id FROM Activity_Logs WHERE activity_name = "Justin Used 4 Groceries"));
