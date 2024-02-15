@@ -1,0 +1,27 @@
+
+th {
+    padding-right: 30px;
+}
+
+tr {
+    border: solid black 1px;
+}
+
+.delete-x {
+    border: none;
+    padding-right: 15px;
+    background-color: white;
+}
+
+.descri-container
+{
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+
+}
+
+.descri-container label {
+    padding-right: 5px;
+}
+
