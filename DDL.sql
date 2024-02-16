@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Groceries (
     -- Attributes --
     grocery_id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     grocery_name        VARCHAR(255) NOT NULL,
-    grocery_category    INT NOT NULL,
+    grocery_category    INT NULL, -- CHANGED THIS TO NULL
     expiration_date     DATE NULL,
     remaining           TINYINT(1) NOT NULL DEFAULT 1, -- Assuming 'Yes' is meant to indicate remaining
     -- Constraints --
@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS Groceries_Owners (
     owner_id            INT NOT NULL,
     -- Constraints --
     PRIMARY KEY (groceries_owners_id),
-    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id),
-    FOREIGN KEY (owner_id) REFERENCES Owners(owner_id)
+    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id) ON DELETE CASCADE,
+    FOREIGN KEY (owner_id) REFERENCES Owners(owner_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Activity_Logs_Groceries (
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS Activity_Logs_Groceries (
     activity_id                INT NOT NULL,
     -- Constraints --
     PRIMARY KEY (activity_logs_groceries_id),
-    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id),
-    FOREIGN KEY (activity_id) REFERENCES Activity_Logs(activity_id)
+    FOREIGN KEY (grocery_id) REFERENCES Groceries(grocery_id) ON DELETE CASCADE,
+    FOREIGN KEY (activity_id) REFERENCES Activity_Logs(activity_id) ON DELETE CASCADE
 );
 
 /*
