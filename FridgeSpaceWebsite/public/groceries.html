@@ -53,6 +53,8 @@
         </tr>
     </table>
 
+    <p>You are able to select multiple people to be owners of groceries.<br>To do this, please hold down Crtl while clicking on the names.</p>
+
     <div class="section">
         <form id="create-grocery">
             <fieldset>
@@ -77,8 +79,14 @@
                     <option value="sauces">Sauces</option>
                     <option value="spices">Spices</option>
                     <option value="others">Others</option>
-                </select> <br> <br>
+                </select> <em> *Optional</em> <br> <br>
 
+                <label for="ownership">Owners:</label>
+                <select name="ownership" id="ownership" required multiple>
+                    <option value="1">Justin Pham</option>
+                    <option value="2">Thuy Duyen Doan</option>
+                    <option value="3">Bean Dog</option>
+                </select> <br> <br>
                 
 
                 <label for="expiration_date">Expiration Date:</label>
@@ -89,48 +97,56 @@
             
         </form>
 
-        <div class="section">
-           
-            <form id="create-grocery">
-                <fieldset>
-                    <legend> <h2>Update Grocery</h2> </legend>
+    </div>
 
-                    <label for= "select_grocery_update">Select a Grocery Item</label>
-                    <select name="grocery_id_select" id="grocery_id_select">
-                        <option value="1">Rolled Oats (ID: 1)</option>
-                        <option value="2">Greek Yogurt (ID: 2)</option>
-                    </select> <br> <br>
+    <div class="section">
+        
+        <form id="update-grocery">
+            <fieldset>
+                <legend> <h2>Update Grocery</h2> </legend>
 
-                    <label for="grocery_name">Grocery Name:</label>
-                    <input type="text" id="grocery_name" name="grocery_name" required><br><br>
-                    
-                    <label for="category">Grocery Category:</label>
-                    <select name="category" id="category" required>
-                        <option value="">Select a category...</option>
-                        <option value="dairy">Dairy</option>
-                        <option value="meat">Meat</option>
-                        <option value="vegetables">Vegetables</option>
-                        <option value="fruits">Fruits</option>
-                        <option value="beverages">Beverages</option>
-                        <option value="snacks">Snacks</option>
-                        <option value="condiments">Condiments</option>
-                        <option value="leftovers">Leftovers</option>
-                        <option value="baked goods">Baked Goods</option>
-                        <option value="breakfast items">Breakfast Items</option>
-                        <option value="baking ingredients">Baking Ingredients</option>
-                        <option value="sauces">Sauces</option>
-                        <option value="spices">Spices</option>
-                        <option value="others">Others</option>
-                    </select> <br> <br>
-    
-                    
-    
-                    <label for="expiration_date">Expiration Date:</label>
-                    <input type="date" id="expiration_date" name="expiration_date"><br><br>
-                    
-                    <input type="submit" value="Submit">
-                </fieldset>
+                <label for= "select_grocery_update">Select a Grocery Item</label>
+                <select name="grocery_id_select" id="grocery_id_select">
+                    <option value="1">Rolled Oats (ID: 1)</option>
+                    <option value="2">Greek Yogurt (ID: 2)</option>
+                </select> <br> <br>
+
+                <label for="grocery_name">Grocery Name:</label>
+                <input type="text" id="grocery_name" name="grocery_name" required><br><br>
                 
-            </form>
+                <label for="category">Grocery Category:</label>
+                <select name="category" id="category">
+                    <option value="">Select a category...</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="meat">Meat</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="beverages">Beverages</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="condiments">Condiments</option>
+                    <option value="leftovers">Leftovers</option>
+                    <option value="baked goods">Baked Goods</option>
+                    <option value="breakfast items">Breakfast Items</option>
+                    <option value="baking ingredients">Baking Ingredients</option>
+                    <option value="sauces">Sauces</option>
+                    <option value="spices">Spices</option>
+                    <option value="others">Others</option>
+                </select> <em> *Optional</em> <br> <br>
+
+                <label for="ownership">Owners:</label>
+                <select name="ownership" id="ownership" required multiple>
+                    <option value="1">Justin Pham</option>
+                    <option value="2">Thuy Duyen Doan</option>
+                    <option value="3">Bean Dog</option>
+                </select> <br> <br>
+
+                <label for="expiration_date">Expiration Date:</label>
+                <input type="date" id="expiration_date" name="expiration_date"><br><br>
+                
+                <input type="submit" value="Submit">
+            </fieldset>
+            
+        </form>
+    </div>
 </body>
 </html>
