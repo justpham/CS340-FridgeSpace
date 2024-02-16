@@ -2,6 +2,14 @@
     Main Entity Tables
 */
 
+CREATE TABLE IF NOT EXISTS Grocery_Categories (
+    -- Attributes --
+    category_id         INT NOT NULL AUTO_INCREMENT UNIQUE,
+    category_name       VARCHAR(255) NOT NULL,
+    -- Constraints --
+    PRIMARY KEY (category_id)
+);
+
 CREATE TABLE IF NOT EXISTS Groceries (
     -- Attributes --
     grocery_id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -11,14 +19,6 @@ CREATE TABLE IF NOT EXISTS Groceries (
     remaining           TINYINT(1) NOT NULL DEFAULT 1, -- Assuming 'Yes' is meant to indicate remaining
     -- Constraints --
     FOREIGN KEY (grocery_category) REFERENCES Grocery_Categories(category_id)
-);
-
-CREATE TABLE IF NOT EXISTS Grocery_Categories (
-    -- Attributes --
-    category_id         INT NOT NULL AUTO_INCREMENT UNIQUE,
-    category_name       VARCHAR(255) NOT NULL,
-    -- Constraints --
-    PRIMARY KEY (category_id)
 );
 
 -- Create or Replace the Owners table --
