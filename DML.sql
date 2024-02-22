@@ -58,7 +58,7 @@ INSERT INTO Activity_Logs (activity_name, description, owner_id)
 VALUES
     (
         activity_name = :activityNameInput,
-        description = :descriptioninput,
+        description = :descriptionInput,
         owner = :ownerIDSelection
     );
 
@@ -68,6 +68,12 @@ INNER JOIN Owners ON owner_id = al.owner_id;
 
 -- Delete Activity Logs
 DELETE FROM Activity_Logs WHERE activity_id = :activityIDTableInput;
+
+-- Update Grocery
+UPDATE Activity_Logs SET activity_name = :activity_name, 
+description = :descriptionInput,
+owner = :ownerIDSelection, -- Drop down of avaliable categories --
+WHERE activity_id = :activityIDSelection;
 
 /* 
     Grocery Owners (intersection table)

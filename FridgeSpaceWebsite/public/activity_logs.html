@@ -33,28 +33,28 @@
             <th>ID</th>
             <th>Activity Name</th>
             <th>Description</th>
-            <th>Owner ID</th>
+            <th>Owner Name</th>
 
         </tr>
         <tr>
             <td>1</td>
-            <td>Dairy</td>
-            <td>Dairy</td>
-            <td>Dairy</td>
+            <td>Justin Added Groceries</td>
+            <td>Items Added: Rolled Oats, Greek Yogurt. Greek Yogurt for me (Justin) but Rolled Oats for Everybody</td>
+            <td>Justin Pham</td>
             <td><button type="button">Delete</button></td>
         </tr>
         <tr>
             <td>2</td>
-            <td>Leftover</td>
-            <td>Dairy</td>
-            <td>Dairy</td>
+            <td>Duyen Added Groceries</td>
+            <td>Items Added: Honey. Everybody will be able to use it</td>
+            <td>Thuy Duyen Doan</td>
             <td><button type="button">Delete</button></td>
         </tr>
         <tr>
             <td>3</td>
-            <td>Fruit</td>
-            <td>Dairy</td>
-            <td>Dairy</td>
+            <td>Justin Used 4 Groceries</td>
+            <td>Made 4 jars of overnight oats for myself only. please do not eat</td>
+            <td>Justin Pham</td>
             <td><button class="button" type="button">Delete</button></td>
             <!-- <td><button class="delete-x">x</button></td> -->
         </tr>
@@ -75,22 +75,65 @@
                 </div>
 
                 <label for="owner-name">Owner:</label>
-                <select name="owner-name" id="owner-name" required>
+                <select name="owner-name" id="owner-name">
                     <option value="">Select an owner...</option>
                     <option value="owner1">Justin Pham</option>
                     <option value="owner2">Duyen Doan</option>
                     <option value="owner3">Bean Pham</option>
-                </select> <br> <br>
+                </select> <em>Optional</em> <br> <br>
 
                 <label for="grocery-name">Groceries:</label>
                 <select name="grocery-name" id="grocery-name" multiple>
                     <option value="1">Rolled Oats</option>
                     <option value="2">Greek Yogurt</option>
-                </select> <em>*Optional</em> <br> <br>                
+                </select> <br> <br>                
                 
                 <input type="submit" value="Submit">
             </fieldset>
             
         </form>
+    </div>
+
+    <div class="section">
+        
+        <form id="update-grocery">
+            <fieldset>
+                <legend> <h2>Update Activity Log</h2> </legend>
+
+                <label for= "select_update_al">Select an Activity Log</label>
+                <select name="select_update_al" id="select_update_al">
+                    <option value="1">Justin Added Groceries (ID: 1)</option>
+                    <option value="2">Duyen Added Groceries (ID: 2)</option>
+                    <option value="3">Justin Used 4 Groceries (ID: 3)</option>
+                </select> <br> <br>
+
+                <label for="acti_name">Activity Name:</label>
+                <input type="text" id="aname" name="aname" required><br><br>
+                
+                <div class="descri-container">
+                    <label for="acti_descri">Activity Description:</label>
+                    <textarea id="descri" name="descri" required rows="4" cols="30"></textarea> <br><br>
+                </div>
+
+                <label for="owner-name">Owner:</label>
+                <select name="owner-name" id="owner-name">
+                    <option value="">Select an owner...</option>
+                    <option value="owner1">Justin Pham</option>
+                    <option value="owner2">Duyen Doan</option>
+                    <option value="owner3">Bean Pham</option>
+                </select> <em>*Optional</em><br> <br>
+
+                <label for="grocery-name">Groceries:</label>
+                <select name="grocery-name" id="grocery-name" multiple>
+                    <option value="1">Rolled Oats</option>
+                    <option value="2">Greek Yogurt</option>
+                </select> <em>*Optional</em> <br> <br>     
+                
+                <input type="submit" value="Submit">
+            </fieldset>
+            
+        </form>
+    </div>
+    
 </body>
 </html>

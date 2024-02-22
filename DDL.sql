@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Groceries (
     -- Attributes --
     grocery_id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     grocery_name        VARCHAR(255) NOT NULL,
-    grocery_category    INT NULL, -- CHANGED THIS TO NULL
+    grocery_category    INT NOT NULL, 
     expiration_date     DATE NULL,
     remaining           TINYINT(1) NOT NULL DEFAULT 1, -- Assuming 'Yes' is meant to indicate remaining
     -- Constraints --
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Activity_Logs (
     activity_id         INT NOT NULL AUTO_INCREMENT UNIQUE,
     activity_name       VARCHAR(255) NOT NULL,
     description         LONGTEXT NULL,
-    owner_id            INT NOT NULL,
+    owner_id            INT NULL,
     -- Constraints --
     PRIMARY KEY (activity_id),
     FOREIGN KEY (owner_id) REFERENCES Owners(owner_id)

@@ -53,7 +53,6 @@
         </tr>
     </table>
 
-    <p>You are able to select multiple people to be owners of groceries.<br>To do this, please hold down Crtl while clicking on the names.</p>
 
     <div class="section">
         <form id="create-grocery">
@@ -79,7 +78,7 @@
                     <option value="sauces">Sauces</option>
                     <option value="spices">Spices</option>
                     <option value="others">Others</option>
-                </select> <em> *Optional</em> <br> <br>
+                </select> <br> <br>
 
                 <label for="ownership">Owners:</label>
                 <select name="ownership" id="ownership" required multiple>
@@ -90,7 +89,7 @@
                 
 
                 <label for="expiration_date">Expiration Date:</label>
-                <input type="date" id="expiration_date" name="expiration_date"><br><br>
+                <input type="date" id="expiration_date" name="expiration_date"><em>*Optional</em><br><br>
                 
                 <input type="submit" value="Submit">
             </fieldset>
@@ -115,7 +114,7 @@
                 <input type="text" id="grocery_name" name="grocery_name" required><br><br>
                 
                 <label for="category">Grocery Category:</label>
-                <select name="category" id="category">
+                <select name="category" id="category" required>
                     <option value="">Select a category...</option>
                     <option value="dairy">Dairy</option>
                     <option value="meat">Meat</option>
@@ -131,7 +130,7 @@
                     <option value="sauces">Sauces</option>
                     <option value="spices">Spices</option>
                     <option value="others">Others</option>
-                </select> <em> *Optional</em> <br> <br>
+                </select> <br> <br>
 
                 <label for="ownership">Owners:</label>
                 <select name="ownership" id="ownership" required multiple>
@@ -141,7 +140,7 @@
                 </select> <br> <br>
 
                 <label for="expiration_date">Expiration Date:</label>
-                <input type="date" id="expiration_date" name="expiration_date"><br><br>
+                <input type="date" id="expiration_date" name="expiration_date"><em>*Optional</em><br><br>
                 
                 <input type="submit" value="Submit">
             </fieldset>
