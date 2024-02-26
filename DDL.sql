@@ -1,7 +1,3 @@
-/*
-    Main Entity Tables
-*/
-
 CREATE TABLE IF NOT EXISTS Grocery_Categories (
     -- Attributes --
     category_id         INT NOT NULL AUTO_INCREMENT UNIQUE,
@@ -112,7 +108,7 @@ INSERT INTO Activity_Logs (activity_name, description, owner_id)
 VALUES
     ("Justin Added Groceries", "Items Added: Rolled Oats, Greek Yogurt. Greek Yogurt for me (Justin) but Rolled Oats for Everybody", (SELECT owner_id FROM Owners WHERE fname = "Justin" AND lname = "Pham")),
     ("Duyen Added Groceries", "Items Added: Honey. Everybody will be able to use it", (SELECT owner_id FROM Owners WHERE fname = "Thuy Duyen" AND lname = "Doan")),
-    ("Justin Used 4 Groceries", "Made 4 jars of overnight oats for myself only. please do not eat", (SELECT owner_id FROM Owners WHERE fname = "Justin" AND lname = "Pham"));
+    ("Justin Used 4 Groceries", "Made 4 jars of overnight oats for myself only. please do not eat", NULL);
 
 -- Insert into Groceries_Owners table --
 INSERT INTO Groceries_Owners (grocery_id, owner_id)
@@ -122,10 +118,10 @@ VALUES
     ((SELECT grocery_id FROM Groceries WHERE grocery_name="Rolled Oats"), (SELECT owner_id FROM Owners WHERE fname="Bean" AND lname = "Dog")),
     ((SELECT grocery_id FROM Groceries WHERE grocery_name="Greek Yogurt"), (SELECT owner_id FROM Owners WHERE fname="Justin" AND lname = "Pham")),
     ((SELECT grocery_id FROM Groceries WHERE grocery_name="Honey"), (SELECT owner_id FROM Owners WHERE fname="Justin" AND lname = "Pham")),
-    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Honey"), (SELECT owner_id FROM Owners WHERE fname="Thuy Duyen" AND lname = " Doan")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Honey"), (SELECT owner_id FROM Owners WHERE fname="Thuy Duyen" AND lname = "Doan")),
     ((SELECT grocery_id FROM Groceries WHERE grocery_name="Honey"), (SELECT owner_id FROM Owners WHERE fname="Bean" AND lname = "Dog")),
-    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk"), (SELECT owner_id FROM Owners WHERE fname="Justin" AND lname = " Pham")),
-    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk"), (SELECT owner_id FROM Owners WHERE fname="Thuy Duyen" AND lname = " Doan"));
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk"), (SELECT owner_id FROM Owners WHERE fname="Justin" AND lname = "Pham")),
+    ((SELECT grocery_id FROM Groceries WHERE grocery_name="Almond Milk"), (SELECT owner_id FROM Owners WHERE fname="Thuy Duyen" AND lname = "Doan"));
 
 -- Insert into Activity_Logs_Groceries table --
 INSERT INTO Activity_Logs_Groceries (grocery_id, activity_id)

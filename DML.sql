@@ -4,6 +4,13 @@
 -- functionalities listed in the Project Specs.
 
 /*
+    Grocery Categories
+*/
+
+SELECT category_id, category_name FROM Grocery_Categories;
+
+
+/*
     Groceries
 */
 
@@ -17,7 +24,7 @@ VALUES
     );
 
 -- List Grocery
-SELECT g.grocery_id, g.grocery_name, g.expiration_date, g.remaining, gc.category_name FROM Groceries g
+SELECT g.grocery_id, g.grocery_name, g.expiration_date, g.remaining, gc.category_name FROM Groceries g 
 INNER JOIN Grocery_Categories gc ON category_id = g.grocery_category;
 
 -- Delete Grocery
@@ -63,8 +70,8 @@ VALUES
     );
 
 -- List Activity Log
-SELECT al.activity_id, al.activity_name, al.description, CONCAT(Owners.fname," ",Owners.lname) FROM Activity_Logs al
-INNER JOIN Owners ON owner_id = al.owner_id;
+SELECT al.activity_id, al.activity_name, al.description, CONCAT(Owners.fname," ", Owners.lname) AS name FROM Activity_Logs al
+LEFT JOIN Owners ON al.owner_id = Owners.owner_id;
 
 -- Delete Activity Logs
 DELETE FROM Activity_Logs WHERE activity_id = :activityIDTableInput;
@@ -80,22 +87,26 @@ WHERE activity_id = :activityIDSelection;
 */
 
 -- List Grocery Owners
-SELECT groceries_owners_id, grocery_id, owner_id FROM Groceries_Owners;
+SELECT groceries_owners_id, Groceries.grocery_name,  CONCAT(Owners.fname," ", Owners.lname) AS owner_name FROM Groceries_Owners
+LEFT JOIN Owners ON Groceries_Owners.owner_id = Owners.owner_id
+LEFT JOIN Groceries ON Groceries_Owners.grocery_id = Groceries.grocery_id;
 
 -- Insert Grocery Owners (Supposed to go alonside create grocery and update grocery)
 INSERT INTO Groceries_Owners (grocery_id, owner_id)
 VALUES
     (
         -- If a user is inserting a grocery this is going to be defaulted to the recently created grocery
-        grocery_id = :selectedGroceryID
-        owner_id = :selectedOwnerID
+        :selectedGroceryID,
+        :selectedOwnerID
     );
 
 /* 
     Grocery Activity Log (intersection table)
 */
 -- List Activity_Log_Groceries
-SELECT activity_logs_groceries_id, activity_id, grocery_id FROM Activity_Log_Groceries;
+SELECT activity_logs_groceries_id, Activity_Logs.activity_name, Groceries.grocery_name FROM Activity_Log_Groceries
+LEFT JOIN Activity_Logs ON Activity_Log_Groceries.activity_id = Activity_Logs.activity_id
+LEFT JOIN Groceries ON Activity_Log_Groceries.grocery_id = Groceries.grocery_id;
 
 -- Insert 
 INSERT INTO Activity_Log_Groceries (activity_id, grocery_id)
@@ -114,7 +125,7 @@ VALUES
 
 -- Get All Avaliable Owners
 
-SELECT owner_id, fname, lname FROM Owners; --> <option value="${owner_id}">${fname} ${lname}</option> for each one
+SELECT owner_id, fname, lname, email FROM Owners; --> <option value="${owner_id}">${fname} ${lname}</option> for each one
 
 -- Get All Avaliable Grocery Categories
 
