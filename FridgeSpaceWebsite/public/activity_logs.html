@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fridge Space</title>
     <link rel="stylesheet" href="style.css">
-
+    <link rel="icon" type="image/x-icon" href="fridgeIcon.ico">
+    <script src="activity_logs.js" defer></script>
 </head>
 <body>
     <nav>
@@ -28,35 +29,13 @@
 
     <h1>Activity Logs</h1>
 
-    <table>
+    <table id="activityLogList">
         <tr>
             <th>ID</th>
             <th>Activity Name</th>
             <th>Description</th>
             <th>Owner Name</th>
-
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Justin Added Groceries</td>
-            <td>Items Added: Rolled Oats, Greek Yogurt. Greek Yogurt for me (Justin) but Rolled Oats for Everybody</td>
-            <td>Justin Pham</td>
-            <td><button type="button">Delete</button></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Duyen Added Groceries</td>
-            <td>Items Added: Honey. Everybody will be able to use it</td>
-            <td>Thuy Duyen Doan</td>
-            <td><button type="button">Delete</button></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Justin Used 4 Groceries</td>
-            <td>Made 4 jars of overnight oats for myself only. please do not eat</td>
-            <td>Justin Pham</td>
-            <td><button class="button" type="button">Delete</button></td>
-            <!-- <td><button class="delete-x">x</button></td> -->
+            <th>Delete</th>
         </tr>
     </table>
 
@@ -96,7 +75,7 @@
 
     <div class="section">
         
-        <form id="update-grocery">
+        <form id="update-log">
             <fieldset>
                 <legend> <h2>Update Activity Log</h2> </legend>
 

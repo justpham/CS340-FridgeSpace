@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fridge Space</title>
+    <link rel="icon" type="image/x-icon" href="fridgeIcon.ico">
+    <script src="grocery_owners.js" defer></script>
 </head>
 <body>
     <nav>
@@ -26,21 +28,11 @@
     <h1>Grocery Owners (Intersection Table)</h1>
 
     <h2>Grocery Owners</h2>
-    <table>
+    <table id="intersectionTable">
         <tr>
             <th>Grocery Owners ID</th>
-            <th>Grocery ID</th>
-            <th>Owner ID</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>2</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>1</td>
-            <td>1</td>
+            <th>Grocery Name</th>
+            <th>Owner Name</th>
         </tr>
     </table>
     <p><em>To delete an entry, please delete the corresponding grocery or owner.</em></p>
