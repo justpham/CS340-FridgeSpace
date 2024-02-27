@@ -131,7 +131,6 @@ app.post('/createGroceries', function(req, res){
                     '${owner}'
                 );`
             db.pool.query(query2, function (err, results, fields) {
-                console.log("Query 2: ", err, results, fields)
             })
         }
     })
@@ -142,14 +141,27 @@ app.post('/createGroceries', function(req, res){
 app.post('/updateGroceries', function(req, res){
 
     // GETS INFORMATION ABOUT ALL GROCERY ITEMS
-    const query1 = `DELETE FROM Groceries WHERE grocery_id = ${"id"}`
+    
 
 })
 
-app.post('/deleteGroceries', function(req, res){
+app.delete('/deleteGroceries/:id', function(req, res){
 
-    // GETS INFORMATION ABOUT ALL GROCERY ITEMS
+    const id = parseInt(req.params.id)
 
+    const query1 =  `DELETE FROM Groceries WHERE grocery_id = ${id}` 
+
+    db.pool.query(query1, function (err, results, fields) {
+        if (err) {
+            // Handle error
+            res.status(500).send('Error deleting grocery item');
+            return
+        }
+        else
+        {
+            res.sendStatus(200)
+        }
+    })
 })
 
 /*

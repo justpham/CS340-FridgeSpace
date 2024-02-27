@@ -6,6 +6,25 @@ const ownership = document.getElementsByName('ownership')
 const createGrocery = document.getElementById('create-grocery')
 
 
+async function handleDelete(groceryID)
+{
+  console.log(`/deleteGroceries/` + groceryID)
+  fetch(`/deleteGroceries/` + groceryID, {method: 'DELETE' })
+  .then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    else
+    {
+      getGroceries()
+    }
+  })
+  .catch(error => {
+      console.error('Error making DELETE request:', error);
+  });
+
+}
+
 // Gets the grocery Lists
 async function getGroceries() {
     fetch('/getGroceries', {method: "GET"})
@@ -43,10 +62,21 @@ async function getGroceries() {
             <td> ${expDate} </td> \
             <td> ${grocery.remaining} </td> \
             <td> ${grocery.category_name} </td> \
-            <td><button type="button" id="delete-id${grocery.grocery_id}">Delete</button></td> \
+            <td><button type="button" id="delete-id${grocery.grocery_id}" class="delete-btn">Delete</button></td> \
             </tr>`
         }
         
+      })
+      .then(() => {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                // Get the grocery ID from the button's ID
+                var groceryId = button.id.replace('delete-id', '');
+                // Call a function to handle the delete operation with this ID
+                await handleDelete(groceryId);
+            });
+        });
       })
       .catch(error => {
         console.error('Fetch error:', error);
