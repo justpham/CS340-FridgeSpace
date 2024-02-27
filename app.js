@@ -1,5 +1,4 @@
 
-
 /*
     SERVER + DATABASE SETUP
 */
@@ -139,9 +138,38 @@ app.post('/createGroceries', function(req, res){
 })
 
 app.post('/updateGroceries', function(req, res){
-
-    // GETS INFORMATION ABOUT ALL GROCERY ITEMS
     
+    const { grocery_id_select, grocery_name, category, ownership, expiration_date, remaining } = req.body;
+
+    // UPDATE 
+    const query1 = `UPDATE Groceries SET grocery_name = ${grocery_name}, 
+    grocery_category = ${category}, -- Drop down of avaliable categories --
+    expiration_date = ${expiration_date.substring(0,10)},
+    remaining = ${remaining}
+    WHERE grocery_id = ${grocery_id_select};`
+
+    // DELETE FROM Groceries_Owners
+    const query2 = `DELETE FROM Groceries_Owners WHERE grocery_id = ${grocery_id_select}`
+
+    db.pool.query(query1, function (err, results, fields) {
+        db.pool.query(query2, function (err, results, fields){
+            for (owner of ownership){
+
+                var query3 = `INSERT INTO Groceries_Owners (grocery_id, owner_id)
+                VALUES
+                    (
+                        -- If a user is inserting a grocery this is going to be defaulted to the recently created grocery
+                       (SELECT MAX(grocery_id) AS max_id FROM Groceries),
+                        '${owner}'
+                    );`
+
+                db.pool.query(query3, function (err, results, fields){
+                })
+            }
+        })
+    })
+
+    res.send(200).redirect('/groceries.html')
 
 })
 
