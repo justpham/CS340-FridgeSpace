@@ -1,1 +1,1 @@
-https://web.engr.oregonstate.edu/~phamjus/FridgeSpaceWebsite/public/index.html
+ http://flip3.engr.oregonstate.edu:62003/index.html
