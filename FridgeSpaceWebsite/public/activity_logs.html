@@ -42,29 +42,24 @@
     <p>You are able to select multiple people to be owners of groceries.<br>To do this, please hold down Crtl while clicking on the names.</p>
 
     <div class="section">
-        <form id="create-log">
+        <form id="create-log" method="post" action="/createActivityLog">
             <fieldset>
                 <legend> <h2>Add An Activity Log</h2> </legend>
-                <label for="acti_name">Activity Name:</label>
-                <input type="text" id="aname" name="aname" required><br><br>
+                <label for="activity_name">Activity Name:</label>
+                <input type="text" id="activity_name" name="activity_name" required><br><br>
 
                 <div class="descri-container">
-                    <label for="acti_descri">Activity Description:</label>
-                    <textarea id="descri" name="descri" required rows="4" cols="30"></textarea> <br><br>
+                    <label for="description">Activity Description:</label>
+                    <textarea id="description" name="description" required rows="4" cols="30"></textarea> <br><br>
                 </div>
 
-                <label for="owner-name">Owner:</label>
-                <select name="owner-name" id="owner-name">
+                <label for="ownership">Owner:</label>
+                <select name="ownership" id="ownership">
                     <option value="">Select an owner...</option>
-                    <option value="owner1">Justin Pham</option>
-                    <option value="owner2">Duyen Doan</option>
-                    <option value="owner3">Bean Pham</option>
                 </select> <em>Optional</em> <br> <br>
 
-                <label for="grocery-name">Groceries:</label>
-                <select name="grocery-name" id="grocery-name" multiple>
-                    <option value="1">Rolled Oats</option>
-                    <option value="2">Greek Yogurt</option>
+                <label for="groceries">Groceries:</label>
+                <select name="groceries" id="groceries" required multiple>
                 </select> <br> <br>                
                 
                 <input type="submit" value="Submit">
@@ -75,37 +70,29 @@
 
     <div class="section">
         
-        <form id="update-log">
+        <form id="update-log" method="post" action="/updateActivityLogs">
             <fieldset>
                 <legend> <h2>Update Activity Log</h2> </legend>
 
                 <label for= "select_update_al">Select an Activity Log</label>
-                <select name="select_update_al" id="select_update_al">
-                    <option value="1">Justin Added Groceries (ID: 1)</option>
-                    <option value="2">Duyen Added Groceries (ID: 2)</option>
-                    <option value="3">Justin Used 4 Groceries (ID: 3)</option>
+                <select name="select_update_al" id="select_update_al" required>
                 </select> <br> <br>
 
-                <label for="acti_name">Activity Name:</label>
-                <input type="text" id="aname" name="aname" required><br><br>
+                <label for="activity_name">Activity Name:</label>
+                <input type="text" id="activity_name" name="activity_name" required><br><br>
                 
                 <div class="descri-container">
-                    <label for="acti_descri">Activity Description:</label>
-                    <textarea id="descri" name="descri" required rows="4" cols="30"></textarea> <br><br>
+                    <label for="description">Activity Description:</label>
+                    <textarea id="description" name="description" required rows="4" cols="30"></textarea> <br><br>
                 </div>
 
-                <label for="owner-name">Owner:</label>
-                <select name="owner-name" id="owner-name">
+                <label for="ownership">Owner:</label>
+                <select name="ownership" id="ownership">
                     <option value="">Select an owner...</option>
-                    <option value="owner1">Justin Pham</option>
-                    <option value="owner2">Duyen Doan</option>
-                    <option value="owner3">Bean Pham</option>
                 </select> <em>*Optional</em><br> <br>
 
-                <label for="grocery-name">Groceries:</label>
-                <select name="grocery-name" id="grocery-name" multiple>
-                    <option value="1">Rolled Oats</option>
-                    <option value="2">Greek Yogurt</option>
+                <label for="groceries">Groceries:</label>
+                <select name="groceries" id="groceries" multiple>
                 </select> <em>*Optional</em> <br> <br>     
                 
                 <input type="submit" value="Submit">

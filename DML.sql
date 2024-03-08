@@ -7,8 +7,18 @@
     Grocery Categories
 */
 
+-- List Grocery Categories
 SELECT category_id, category_name FROM Grocery_Categories;
 
+-- Delete Grocery Category
+DELETE FROM Grocery_Categories WHERE category_id = :categoryIDTableInput;
+
+-- Create Grocery Category
+INSERT INTO Grocery_Categories (category_name)
+VALUES
+    (
+        :categoryNameInput
+    );
 
 /*
     Groceries
@@ -45,9 +55,9 @@ WHERE grocery_id = :groceryIDSelection;
 INSERT INTO Owners (fname, lname, email)
 VALUES
     (
-        fname = :fnameInput,
-        lname = :lnameInput,
-        email = :emailInput
+        :fnameInput,
+        :lnameInput,
+        :emailInput
     );
 
 -- List Owner
@@ -64,9 +74,9 @@ DELETE FROM Owners WHERE owner_id = :ownerIDTableInput;
 INSERT INTO Activity_Logs (activity_name, description, owner_id)
 VALUES
     (
-        activity_name = :activityNameInput,
-        description = :descriptionInput,
-        owner = :ownerIDSelection
+        :activityNameInput,
+        :descriptionInput,
+        :ownerIDSelection
     );
 
 -- List Activity Log
@@ -79,7 +89,7 @@ DELETE FROM Activity_Logs WHERE activity_id = :activityIDTableInput;
 -- Update Grocery
 UPDATE Activity_Logs SET activity_name = :activity_name, 
 description = :descriptionInput,
-owner = :ownerIDSelection, -- Drop down of avaliable categories --
+owner_id = :ownerIDSelection -- Drop down of avaliable categories --
 WHERE activity_id = :activityIDSelection;
 
 /* 
@@ -109,12 +119,12 @@ LEFT JOIN Activity_Logs ON Activity_Log_Groceries.activity_id = Activity_Logs.ac
 LEFT JOIN Groceries ON Activity_Log_Groceries.grocery_id = Groceries.grocery_id;
 
 -- Insert 
-INSERT INTO Activity_Log_Groceries (activity_id, grocery_id)
+INSERT INTO Activity_Logs_Groceries (activity_id, grocery_id)
 VALUES
     (
         -- If a user is inserting an activity this is going to be defaulted to the recently created activity
-        activity_id = :selectedActivityID
-        grocery_id = :selectedGroceryID
+        :selectedActivityID,
+        :selectedGroceryID
     );
 
 -- Deletes for Intersection Tables implemented with deleting the respective entities they are for using CASCADE
