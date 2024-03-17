@@ -1,27 +1,178 @@
 
-th {
-    padding-right: 30px;
+/*
+    BASIC FORMATTING SECTION
+*/
+
+/* Style for general text */
+p, h1, h2, h3, h4, h5, h6 {
+    color: #333333;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
 }
 
-tr {
-    border: solid black 1px;
+/* Example additional style for specific headers */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.delete-x {
+/* Example additional style for specific text */
+p {
+    font-size: 16px;
+}
+
+.webpage-title {
+    font-size: 36px; /* Adjust the size as needed */
+    /* You can also add other styling properties here */
+}
+
+/*
+    TABLE FORMATTING
+*/
+
+.delete-btn {
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    background-color: #ff0000;
+    color: #ffffff;
     border: none;
-    padding-right: 15px;
-    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
 }
 
+/* Adjustments to fit within table cell */
+td .delete-btn {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+/* Style for table headers */
+th {
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Style for table data cells */
+td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/*
+    NAV SECTION STYLE
+*/
+
+/* Style for navigation section */
+.nav-section, .webpage-title{
+    background-color: #ffffff;
+    padding-bottom: 10px; /* Add some padding at the bottom for spacing */
+    margin: 0;
+}
+
+/* Style for navigation links */
+.nav-section a {
+    color: #333; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Style for navigation links on hover */
+.nav-section a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+#navbar a {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 -3px; /* Adjust the margin to bring buttons closer */
+    background-color: #ffffff; /* Background color */
+    color: black; /* Text color */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+#navbar a:not(:last-child) {
+    border-right: 1px solid white;
+}
+
+#navbar:first-child{
+    margin: 0; /* Adjust the margin to bring buttons closer */
+}
+
+#navbar a:hover {
+    background-color: #D3D3D3; /* Hover background color */
+}
+
+/*
+    INPUT SECTIONS
+*/
+
+/* Style for input boxes */
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Style for submit button */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Style for submit button on hover */
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Style for select boxes */
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Style for legend */
+legend {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* This is for the description writing for activity logs */
 .descri-container
 {
     display: flex;
     align-items: center;
     padding-bottom: 15px;
-
 }
 
+/* This is for the description writing for activity logs */
 .descri-container label {
     padding-right: 5px;
 }
+
+/*
+    Misc Section
+*/
 

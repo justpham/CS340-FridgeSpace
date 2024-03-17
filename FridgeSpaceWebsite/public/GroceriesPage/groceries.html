@@ -5,27 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fridge Space</title>
     <script src="groceries.js" defer></script>
-    <link rel="icon" type="image/x-icon" href="fridgeIcon.ico">
+    <link rel="icon" type="image/x-icon" href="../fridgeIcon.ico">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <nav>
+    <nav class="nav-section">
         <div id="Website Title">
-            <h1>Fridge Space</h1>
+            <h1> <img src="../fridgeIcon.ico" alt="Fridge Icon" style="vertical-align: middle;"> Fridge Space</h1>
         </div>
         <div id="navbar">
-            [
-            <a href="index.html">Home Page</a> |
-            <a href="groceries.html">Groceries</a> |
-            <a href="owners.html">Owners</a> |
-            <a href="activity_logs.html">Activity Logs</a> |
-            <a href="grocery_categories.html">Grocery Categories</a> |
-            <a href="grocery_owners.html">Grocery Owners</a> |
-            <a href="activity_logs_groceries.html">Grocery Activity Log</a>
-            ]
-        </div>
+            <a href="../index.html">Home Page</a>
+            <a href="../GroceriesPage/groceries.html">Groceries</a>
+            <a href="../OwnersPage/owners.html">Owners</a>
+            <a href="../ActivityLogPage/activity_logs.html">Activity Logs</a>
+            <a href="../GroceryCategoriesPage/grocery_categories.html">Grocery Categories</a>
+            <a href="../GroceryOwnersPage/grocery_owners.html">Grocery Owners</a>
+            <a href="../GroceryActivityLogPage/activity_logs_groceries.html">Grocery Activity Log</a>
+        </div>        
     </nav>
 
-    <h1>Groceries</h1>
+    <h1 class="webpage-title">Groceries</h1>
 
     <h2>Grocery List</h2>
     <table id="groceryList">
@@ -53,7 +52,7 @@
                 </select> <br> <br>
 
                 <label for="ownership">Owners:</label>
-                <select name="ownership" id="ownership" required multiple>
+                <select name="ownership" id="ownership" required multiple size="3">
                 </select> <br> <br>
                 
 
@@ -62,7 +61,6 @@
                 
                 <input type="submit" value="Submit">
             </fieldset>
-            
         </form>
 
     </div>
@@ -86,18 +84,17 @@
                 </select> <br> <br>
 
                 <label for="ownership">Owners:</label>
-                <select name="ownership" id="ownership" required multiple>
+                <select name="ownership" id="ownership" required multiple size="3">
                 </select> <br> <br>
 
                 <label for="expiration_date">Expiration Date:</label> 
                 <input type="date" id="expiration_date" name="expiration_date"> <em> *Optional</em> <br><br>
 
                 <label for="remaining">Remaining:</label>
-                <input type="range" id="remaining" name="remaining" min="0" max="1">
+                <input type="range" id="remaining" name="remaining" min="0" max="1"> <br><br>
                 
                 <input type="submit" value="Submit">
             </fieldset>
-            
         </form>
     </div>
 </body>
