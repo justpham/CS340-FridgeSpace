@@ -3,6 +3,12 @@ const ownership = document.getElementsByName('ownership')
 const groceries = document.getElementsByName('groceries')
 const activityIDSelect = document.getElementById('select_update_al')
 
+/* ****************************
+    TABLE FUNCTIONS
+**************************** */ 
+
+// When a user clicks a button, this function sends a delete request to the server 
+// and refreshes the table
 async function handleDelete(ID)
 {
   console.log(`/deleteActivityLog/` + ID)
@@ -21,6 +27,8 @@ async function handleDelete(ID)
   });
 
 }
+
+// Gets all the activity logs
 async function getActivityLogs() {
     fetch('/getActivityLogs', {method: "GET"})
     .then(response => {
@@ -31,6 +39,7 @@ async function getActivityLogs() {
       })
       .then(data => {
 
+        // Add headers for the table
         activityLogList.innerHTML = `<tr>
             <th>ID</th>
             <th>Activity Name</th>
@@ -39,8 +48,7 @@ async function getActivityLogs() {
             <th>Delete</th>
         </tr>`
 
-        console.log(data)
-
+        // Insert the data into the table
         for (activityLog of data){
     
             if (activityLog.name == null)
@@ -63,6 +71,7 @@ async function getActivityLogs() {
         
       })
       .then(() => {
+        // Add a delete button which corresponds to each row of the table
         const deleteButtons = document.querySelectorAll('.delete-btn');
         deleteButtons.forEach(button => {
             button.addEventListener('click', async () => {
@@ -78,6 +87,11 @@ async function getActivityLogs() {
       });
 }
 
+/* ****************************
+    POPULATES DROP DOWN MENUS
+**************************** */ 
+
+// Gets all avaliable owners and their ids
 async function populateOwners(){
   fetch('/getOwners', {method: "GET"})
   .then(response => {
@@ -100,6 +114,7 @@ async function populateOwners(){
     });
 }
 
+// Gets all avaliable groceries and their ids
 async function populateGroceries(){
   fetch('/getGroceryIDs', {method: "GET"})
   .then(response => {
@@ -122,6 +137,7 @@ async function populateGroceries(){
     });
 }
 
+// Gets all avaliable activity logs and their ids
 async function populateActivityLogIDs(){
   fetch('/getActivityIDs', {method: "GET"})
   .then(response => {
@@ -143,6 +159,9 @@ async function populateActivityLogIDs(){
     });
 }
 
+/* ****************************
+    RUNS CODE ON INITAL START UP
+**************************** */ 
 
 getActivityLogs()
 populateGroceries()

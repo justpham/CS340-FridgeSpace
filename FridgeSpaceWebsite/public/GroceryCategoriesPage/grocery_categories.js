@@ -1,5 +1,11 @@
 const categoryList = document.getElementById('categoryList')
 
+/* ****************************
+    TABLE FUNCTIONS
+**************************** */ 
+
+// When a user clicks a button, this function sends a delete request to the server 
+// and refreshes the table
 async function handleDelete(ID)
 {
   console.log(`/deleteCategories/` + ID)
@@ -19,6 +25,7 @@ async function handleDelete(ID)
 
 }
 
+// Gets the categories list
 async function getCategories(){
     fetch('/getCategories', {method: "GET"})
     .then(response => {
@@ -28,15 +35,15 @@ async function getCategories(){
         return response.json();
       })
       .then(data => {
-
+      
+        // Add headers for the table
         categoryList.innerHTML = `<tr>
             <th>ID</th>
             <th>Category Name</th>
             <th>Delete</th>
         </tr>`
 
-        console.log(data)
-
+        // Insert the data into the table
         for (category of data){
     
             categoryList.innerHTML += `<tr> \
@@ -48,6 +55,7 @@ async function getCategories(){
         
       })
       .then(() => {
+        // Add a delete button which corresponds to each row of the table
         const deleteButtons = document.querySelectorAll('.delete-btn');
         deleteButtons.forEach(button => {
             button.addEventListener('click', async () => {
@@ -62,5 +70,9 @@ async function getCategories(){
         console.error('Fetch error:', error);
       });
 }
+
+/* ****************************
+    RUNS CODE ON INITAL START UP
+**************************** */ 
 
 getCategories()

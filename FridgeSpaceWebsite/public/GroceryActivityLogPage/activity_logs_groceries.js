@@ -1,6 +1,11 @@
 
 const intersectionTable = document.getElementById('intersectionTable')
 
+/* ****************************
+    TABLE FUNCTIONS
+**************************** */ 
+
+// Gets all M:M relationships between Activity_Logs and Groceries
 async function getGroceryActivityLog(){
     fetch('/getGroceryActivityLog', {method: "GET"})
     .then(response => {
@@ -31,5 +36,9 @@ async function getGroceryActivityLog(){
         console.error('Fetch error:', error);
       });
 }
+
+/* ****************************
+    RUNS CODE ON INITAL START UP
+**************************** */ 
 
 getGroceryActivityLog()

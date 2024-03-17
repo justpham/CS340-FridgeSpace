@@ -5,10 +5,14 @@ const groceryIDSelect = document.getElementById('grocery_id_select')
 const ownership = document.getElementsByName('ownership')
 const createGrocery = document.getElementById('create-grocery')
 
+/* ****************************
+    TABLE FUNCTIONS
+**************************** */ 
 
+// When a user clicks a button, this function sends a delete request to the server 
+// and refreshes the table
 async function handleDelete(groceryID)
 {
-  console.log(`/deleteGroceries/` + groceryID)
   fetch(`/deleteGroceries/` + groceryID, {method: 'DELETE' })
   .then(response => {
     if (!response.ok) {
@@ -25,7 +29,7 @@ async function handleDelete(groceryID)
 
 }
 
-// Gets the grocery Lists
+// Gets the groceries List
 async function getGroceries() {
     fetch('/getGroceries', {method: "GET"})
     .then(response => {
@@ -36,6 +40,7 @@ async function getGroceries() {
       })
       .then(data => {
 
+        // Add headers for the table
         groceryList.innerHTML = `<tr>
             <th>ID</th>
             <th>Grocery Name</th>
@@ -45,6 +50,7 @@ async function getGroceries() {
             <th>Delete</th>
         </tr>`
 
+        // Insert the data into the table
         for (grocery of data){
     
             if (grocery.expiration_date == null)
@@ -68,6 +74,7 @@ async function getGroceries() {
         
       })
       .then(() => {
+        // Add a delete button which corresponds to each row of the table
         const deleteButtons = document.querySelectorAll('.delete-btn');
         deleteButtons.forEach(button => {
             button.addEventListener('click', async () => {
@@ -83,6 +90,11 @@ async function getGroceries() {
       });
 }
 
+/* ****************************
+    POPULATES DROP DOWN MENUS
+**************************** */ 
+
+// Gets all avaliable categories and their ids
 async function populateCategory(){
     fetch('/getCategories', {method: "GET"})
     .then(response => {
@@ -106,6 +118,7 @@ async function populateCategory(){
       });
 }
 
+// Gets all avaliable groceries and their ids
 async function populateGroceryIDs(){
     fetch('/getGroceryIDs', {method: "GET"})
     .then(response => {
@@ -127,6 +140,7 @@ async function populateGroceryIDs(){
       });
 }
 
+// Gets all owners and their ids
 async function populateOwners(){
     fetch('/getOwners', {method: "GET"})
     .then(response => {
@@ -148,6 +162,10 @@ async function populateOwners(){
         console.error('Fetch error:', error);
       });
 }
+
+/* ****************************
+    RUNS CODE ON INITAL START UP
+**************************** */ 
 
 getGroceries();
 populateCategory();

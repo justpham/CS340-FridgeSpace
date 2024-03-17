@@ -1,7 +1,11 @@
 
 /*
-    SERVER + DATABASE SETUP
-*/
+ * 
+ *    SERVER + DATABASE SETUP
+ *    Copied from Activity 2 - Connect Webapp to Database on Feburary 22, 2024 (https://canvas.oregonstate.edu/courses/1946034/assignments/9456203)
+ * 
+ */
+
 // Express
 var express = require('express');
 const bodyParser = require('body-parser')   
@@ -17,36 +21,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 /*
-    TEMPLATE
-*/
-
-/*
-    FUNCTIONS
-*/
-async function executeSqlFile(filename) {
-    try {
-        // Read the SQL file
-        const filePath = path.join(__dirname, filename);
-        var sql = fs.readFileSync(filePath, 'utf8').toString().split(';');
-
-        sql.pop()
-
-        // Execute the SQL query
-        for (query of sql){
-            console.log(query)
-            await db.pool.query(query + ";", function(err, results, fields){
-                if (err){
-                    throw err
-                }
-            });
-        }
-        
-        
-        console.log('SQL file executed successfully:', filename);
-    } catch (error) {
-        console.error('Error executing SQL file:', error.message);
-    }
-}
+ * 
+ *    HELPER FUNCTIONS
+ * 
+ */
  
 function formatExpirationDate(rawDate) {
     const dateObj = new Date(rawDate);
@@ -55,39 +33,18 @@ function formatExpirationDate(rawDate) {
     const day = String(dateObj.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
- 
-/*
-*
-    ROUTES
-*
-*/
-app.put('/resetDatabase', async function(req, res){
-    try{
-        //const filename1 = "databaseReset.sql"
-        const filename2 = "DDL.sql"
-
-        //await executeSqlFile(filename1)
-        await executeSqlFile(filename2)
-    
-        res.status(200).send("Database Reset Successfully")
-    }
-    catch (error)
-    {
-        res.status(500).send(error)
-    }
-
-})
 
 /*
-    GROCERIES SECTION
-*/
+ * 
+ *    GROCERIES SECTION
+ * 
+ */
 
 app.get('/getGroceries', function(req, res){
 
     const query1 = "SELECT g.grocery_id, g.grocery_name, g.expiration_date, g.remaining, gc.category_name FROM Groceries g INNER JOIN Grocery_Categories gc ON category_id = g.grocery_category;"
    
     // GETS INFORMATION ABOUT ALL GROCERY ITEMS
-
     db.pool.query(query1, function (err, results, fields) {
         res.status(200).send(JSON.stringify(results))
     })
@@ -96,9 +53,12 @@ app.get('/getGroceries', function(req, res){
 
 app.post('/createGroceries', function(req, res){
 
+    // Gets req.body information from the client 
     const groceryName = req.body.grocery_name;
     const category = req.body.category;
     const ownership = req.body.ownership;
+
+    // Since the expiration can be an optional value, handle for null
     var expirationDate
     if (req.body.expiration_date == null)
     {
@@ -108,8 +68,6 @@ app.post('/createGroceries', function(req, res){
     {
         expirationDate = formatExpirationDate(req.body.expiration_date);
     }
-
-    console.log(expirationDate)
 
     const query1 = `INSERT INTO Groceries (grocery_name, grocery_category, expiration_date)
     VALUES
@@ -123,6 +81,7 @@ app.post('/createGroceries', function(req, res){
     db.pool.query(query1, function (err, results, fields) {
         console.log("Query 1: ", err, results, fields)
 
+        // For each owner for the added grocery, add it to the intersection table
         for (owner of ownership)
         {
             var query2 = `INSERT INTO Groceries_Owners (grocery_id, owner_id)
@@ -142,28 +101,36 @@ app.post('/createGroceries', function(req, res){
 
 app.post('/updateGroceries', function(req, res){
     
+    // Get from req.body
     const { grocery_id_select, grocery_name, category, ownership, expiration_date, remaining } = req.body;
 
-    var expirationDate
+    // Handle optional input for null
+    var expirationDate, query1
     if (req.body.expiration_date == null)
     {
         expirationDate = req.body.expiration_date
+
+        // UPDATE query (handles null)
+        query1 = `UPDATE Groceries SET grocery_name = '${grocery_name}', 
+        grocery_category = ${category}, -- Drop down of avaliable categories --
+        expiration_date = NULL,
+        remaining = ${remaining}
+        WHERE grocery_id = ${grocery_id_select};`
     }
     else
     {
         expirationDate = formatExpirationDate(req.body.expiration_date);
+
+        // UPDATE query
+        query1 = `UPDATE Groceries SET grocery_name = '${grocery_name}', 
+        grocery_category = ${category}, -- Drop down of avaliable categories --
+        expiration_date = '${expirationDate.substring(0,10)}',
+        remaining = ${remaining}
+        WHERE grocery_id = ${grocery_id_select};`
     }
 
-    // UPDATE 
-    const query1 = `UPDATE Groceries SET grocery_name = '${grocery_name}', 
-    grocery_category = ${category}, -- Drop down of avaliable categories --
-    expiration_date = '${expirationDate.substring(0,10)}',
-    remaining = ${remaining}
-    WHERE grocery_id = ${grocery_id_select};`
 
-    console.log(expirationDate.substring(0,10))
-
-    // DELETE FROM Groceries_Owners
+    // Deletes all existing M:M relationships for that grocery so that the updated list of owners can be added to the intersection table
     const query2 = `DELETE FROM Groceries_Owners WHERE grocery_id = ${grocery_id_select}`
 
     db.pool.query(query1, function (err, results, fields) {
@@ -191,6 +158,7 @@ app.post('/updateGroceries', function(req, res){
 
 app.delete('/deleteGroceries/:id', function(req, res){
 
+    // Gets id from the parameters
     const id = parseInt(req.params.id)
 
     const query1 =  `DELETE FROM Groceries WHERE grocery_id = ${id}` 
@@ -209,8 +177,10 @@ app.delete('/deleteGroceries/:id', function(req, res){
 })
 
 /*
-    GROCERIES CATEGORIES SECTION
-*/
+ * 
+ *    GROCERIES CATEGORIES SECTION
+ * 
+ */
 
 // This function is also used to get the dropdown list
 app.get('/getCategories', function(req, res){
@@ -225,6 +195,7 @@ app.get('/getCategories', function(req, res){
 
 app.post('/createCategories', function(req, res){
 
+    // Gets category name from the req.body
     const category_name = req.body.category_name;
 
     const query1 = `INSERT INTO Grocery_Categories (category_name)
@@ -242,6 +213,7 @@ app.post('/createCategories', function(req, res){
 
 app.delete('/deleteCategories/:id', function(req, res){
 
+    // Gets id from the parameters
     const id = parseInt(req.params.id)
 
     const query1 =  `DELETE FROM Grocery_Categories WHERE category_id = ${id}` 
@@ -260,8 +232,10 @@ app.delete('/deleteCategories/:id', function(req, res){
 })
 
 /*
-    OWNERS SECTION
-*/
+ * 
+ *    OWNERS SECTION
+ * 
+ */
 
 // This function is also used to get the dropdown list
 app.get('/getOwners', function(req, res){
@@ -276,8 +250,7 @@ app.get('/getOwners', function(req, res){
 
 app.post('/createOwners', function(req, res){
 
-    console.log(req.body)
-
+    // Get form req.body
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
@@ -299,6 +272,7 @@ app.post('/createOwners', function(req, res){
 
 app.delete('/deleteOwners/:id', function(req, res){
 
+    // Gets id from the parameters
     const id = parseInt(req.params.id)
 
     const query1 =  `DELETE FROM Owners WHERE owner_id = ${id}` 
@@ -317,8 +291,10 @@ app.delete('/deleteOwners/:id', function(req, res){
 })
 
 /*
-    ACTIVITY LOG SECTION
-*/
+ * 
+ *    ACTIVITY LOG SECTION
+ * 
+ */
 
 app.get('/getActivityLogs', function(req, res) {
 
@@ -332,8 +308,10 @@ app.get('/getActivityLogs', function(req, res) {
 
 app.post('/createActivityLog', function(req, res){
 
+    // Get from req.body
     var { activity_name, description, ownership, groceries } = req.body
 
+    // Handle for null values
     var owners
     if (ownership == '' || ownership == null){
         owners = "NULL"
@@ -355,8 +333,9 @@ app.post('/createActivityLog', function(req, res){
 
     db.pool.query(query1, function (err, results, fields) {
 
+        // For each grocery, make a relationship in the activity log grocery intersection table
         for (grocery of groceries) {
-
+            
             var query2 = `INSERT INTO Activity_Logs_Groceries (activity_id, grocery_id)
             VALUES
                 (
@@ -376,6 +355,7 @@ app.post('/createActivityLog', function(req, res){
 
 app.delete('/deleteActivityLog/:id', function(req, res){
 
+    // Gets id from the parameters
     const id = parseInt(req.params.id)
 
     const query1 =  `DELETE FROM Activity_Logs WHERE activity_id = ${id};` 
@@ -395,6 +375,7 @@ app.delete('/deleteActivityLog/:id', function(req, res){
 
 app.post('/updateActivityLogs', function(req, res){
     
+    // Get from req.body
     var { select_update_al, activity_name, description, ownership, groceries } = req.body
 
     // UPDATE 
@@ -403,14 +384,13 @@ app.post('/updateActivityLogs', function(req, res){
         owner_id = '${ownership}'
         WHERE activity_id = '${select_update_al}'`
 
-    // DELETE FROM Groceries_Owners
+    // DELETE FROM Groceries_Owners so that M:M relationship can be re-inserted into the intersection table
     const query2 = `DELETE FROM Activity_Logs_Groceries WHERE activity_id = ${select_update_al}`
 
     db.pool.query(query1, function (err, results, fields) {
         console.log(err)
         db.pool.query(query2, function (err, results, fields){
             console.log(err)
-
 
             for (grocery of groceries){
 
@@ -437,8 +417,10 @@ app.post('/updateActivityLogs', function(req, res){
 
 
 /*
-    GROCERY OWNERS SECTION
-*/
+ * 
+ *    GROCERIES OWNERS SECTION
+ * 
+ */
 
 app.get('/getGroceryOwners', function(req, res){
 
@@ -452,8 +434,10 @@ app.get('/getGroceryOwners', function(req, res){
 })
 
 /*
-    GROCERY ACTIVITY LOG SECTION
-*/
+ * 
+ *    GROCERY ACTIVITY LOG SECTION
+ * 
+ */
 
 app.get('/getGroceryActivityLog', function(req, res){
 
@@ -467,8 +451,10 @@ app.get('/getGroceryActivityLog', function(req, res){
 })
 
 /*
-    DROP DOWN AND MISC SECTION
-*/
+ * 
+ *    DROP DOWN AND MISC SECTION
+ * 
+ */
 
 app.get('/getGroceryIDs', function(req, res){
 
@@ -492,8 +478,12 @@ app.get('/getActivityIDs', function(req, res){
 
 
 /*
-    LISTENER
-*/
+ * 
+ *    LISTENER
+ *    Copied from Activity 2 - Connect Webapp to Database on Feburary 22, 2024 (https://canvas.oregonstate.edu/courses/1946034/assignments/9456203)
+ * 
+ */
+
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });

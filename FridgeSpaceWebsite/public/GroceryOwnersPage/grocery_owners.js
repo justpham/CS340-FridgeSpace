@@ -1,6 +1,12 @@
 
 const intersectionTable = document.getElementById('intersectionTable')
 
+
+/* ****************************
+    TABLE FUNCTIONS
+**************************** */ 
+
+// Gets all M:M relationships between Owners and Groceries
 async function getGroceryOwners(){
   fetch('/getGroceryOwners', {method: "GET"})
   .then(response => {
@@ -32,5 +38,8 @@ async function getGroceryOwners(){
     });
 }
 
+/* ****************************
+    RUNS CODE ON INITAL START UP
+**************************** */ 
 
 getGroceryOwners()

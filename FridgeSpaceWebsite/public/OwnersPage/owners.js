@@ -1,8 +1,13 @@
 const ownerList = document.getElementById('ownerList')
 
+/* ****************************
+    TABLE FUNCTIONS
+**************************** */ 
+
+// When a user clicks a button, this function sends a delete request to the server 
+// and refreshes the table
 async function handleDelete(ID)
 {
-  console.log(`/deleteOwners/` + ID)
   fetch(`/deleteOwners/` + ID, {method: 'DELETE' })
   .then(response => {
     if (!response.ok) {
@@ -19,6 +24,7 @@ async function handleDelete(ID)
 
 }
 
+// Gets the owners using a get request
 async function getOwners(){
     fetch('/getOwners', {method: "GET"})
     .then(response => {
@@ -28,17 +34,16 @@ async function getOwners(){
         return response.json();
       })
       .then(data => {
-
+        
+        // Add headers for the table
         ownerList.innerHTML = `<tr>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
             <th>Delete</th>
         </tr>`
-
-        console.log(data)
-
-
+      
+        // Insert the data into the table
         for (owner of data){
             ownerList.innerHTML += `<tr> \
             <td> ${owner.owner_id} </td> \
@@ -50,6 +55,7 @@ async function getOwners(){
         
       })
       .then(() => {
+        // Add a delete button which corresponds to each row of the table
         const deleteButtons = document.querySelectorAll('.delete-btn');
         deleteButtons.forEach(button => {
             button.addEventListener('click', async () => {
@@ -64,5 +70,9 @@ async function getOwners(){
         console.error('Fetch error:', error);
       });
 }
+
+/* ****************************
+    RUNS CODE ON INITAL START UP
+**************************** */ 
 
 getOwners()
