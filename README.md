@@ -12,3 +12,4 @@ app.js
 SERVER + DATABASE SETUP code and LISTENER code copied from Activity 2 - Connect webapp to Database on Feburary 22, 2024
 Source: https://canvas.oregonstate.edu/courses/1946034/assignments/9456203
 
+All other code is created by us
