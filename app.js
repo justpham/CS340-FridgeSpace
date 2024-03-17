@@ -109,6 +109,8 @@ app.post('/createGroceries', function(req, res){
         expirationDate = formatExpirationDate(req.body.expiration_date);
     }
 
+    console.log(expirationDate)
+
     const query1 = `INSERT INTO Groceries (grocery_name, grocery_category, expiration_date)
     VALUES
         (
@@ -142,17 +144,30 @@ app.post('/updateGroceries', function(req, res){
     
     const { grocery_id_select, grocery_name, category, ownership, expiration_date, remaining } = req.body;
 
+    var expirationDate
+    if (req.body.expiration_date == null)
+    {
+        expirationDate = req.body.expiration_date
+    }
+    else
+    {
+        expirationDate = formatExpirationDate(req.body.expiration_date);
+    }
+
     // UPDATE 
-    const query1 = `UPDATE Groceries SET grocery_name = ${grocery_name}, 
+    const query1 = `UPDATE Groceries SET grocery_name = '${grocery_name}', 
     grocery_category = ${category}, -- Drop down of avaliable categories --
-    expiration_date = ${expiration_date.substring(0,10)},
+    expiration_date = '${expirationDate.substring(0,10)}',
     remaining = ${remaining}
     WHERE grocery_id = ${grocery_id_select};`
+
+    console.log(expirationDate.substring(0,10))
 
     // DELETE FROM Groceries_Owners
     const query2 = `DELETE FROM Groceries_Owners WHERE grocery_id = ${grocery_id_select}`
 
     db.pool.query(query1, function (err, results, fields) {
+        console.log(err, results, fields)
         db.pool.query(query2, function (err, results, fields){
             for (owner of ownership){
 
@@ -319,13 +334,23 @@ app.post('/createActivityLog', function(req, res){
 
     var { activity_name, description, ownership, groceries } = req.body
 
+    var owners
+    if (ownership == '' || ownership == null){
+        owners = "NULL"
+    }
+    else {
+        owners = `'${ownership}'`
+    }
+
+    console.log(activity_name, description, owners, groceries)
+
     // Use groceries for intersection table
     const query1 = `INSERT INTO Activity_Logs (activity_name, description, owner_id)
     VALUES
         (
             '${activity_name}',
             '${description}',
-            '${ownership}'
+            ${owners}
         );`
 
     db.pool.query(query1, function (err, results, fields) {
@@ -464,69 +489,6 @@ app.get('/getActivityIDs', function(req, res){
     })
 
 })
-
-app.post('/filterSearch', function(req, res){
-
-    console.log(req.body)
-
-    var grocery_name = null
-    var owner_name = null
-
-    const query1 = `SELECT groceries_owners_id, Groceries.grocery_name,  CONCAT(Owners.fname," ", Owners.lname) AS owner_name FROM Groceries_Owners
-    LEFT JOIN Owners ON Groceries_Owners.owner_id = Owners.owner_id
-    LEFT JOIN Groceries ON Groceries_Owners.grocery_id = Groceries.grocery_id;`
-
-    console.log(grocery_name, owner_name)
-
-    // If none is filled
-    if (grocery_name == null && owner_name == null){
-        db.pool.query(query1, function (err, results, fields) {
-            console.log(err)
-            res.status(200).send(JSON.stringify(results))
-        })
-    }
-
-    // Only the groceryName is filled
-    else if (owner_name == null && grocery_name != null) {
-
-        const query2 = `SELECT groceries_owners_id, Groceries.grocery_name,  CONCAT(Owners.fname," ", Owners.lname) AS owner_name FROM Groceries_Owners
-        LEFT JOIN Owners ON Groceries_Owners.owner_id = Owners.owner_id
-        LEFT JOIN Groceries ON Groceries_Owners.grocery_id = 
-        (SELECT Groceries.grocery_id FROM Groceries WHERE CONTAINS(Groceries.grocery_name, ${grocery_name}));`
-
-
-        db.pool.query(query2, function (err, results, fields) {
-            console.log(err)
-            res.status(200).send(JSON.stringify(results))
-        })
-    }
-
-    // Only the ownerName is filled
-    else if (owner_name != null && grocery_name == null) {
-
-        const query3 = `SELECT groceries_owners_id, Groceries.grocery_name,  CONCAT(Owners.fname," ", Owners.lname) AS owner_name FROM Groceries_Owners
-        LEFT JOIN Owners ON Groceries_Owners.owner_id = (SELECT Owners.owner_id FROM Owners WHERE CONTAINS(Owners.owners_id, ${owner_name}))
-        LEFT JOIN Groceries ON Groceries_Owners.grocery_id = Groceries.grocery_id;`
-
-        db.pool.query(query3, function (err, results, fields) {
-            console.log(err)
-            res.status(200).send(JSON.stringify(results))
-        })
-    }
-
-    // If both is filled
-    else {
-        db.pool.query(query4, function (err, results, fields) {
-            const query4 = `SELECT groceries_owners_id, Groceries.grocery_name,  CONCAT(Owners.fname," ", Owners.lname) AS owner_name FROM Groceries_Owners
-            LEFT JOIN Owners ON Groceries_Owners.owner_id = (SELECT Owners.owner_id FROM Owners WHERE CONTAINS(Owners.owners_id, ${owner_name}))
-            LEFT JOIN Groceries ON Groceries_Owners.grocery_id = (SELECT Groceries.grocery_id FROM Groceries WHERE CONTAINS(Groceries.grocery_name, ${grocery_name}));`
-            console.log(err)
-            res.status(200).send(JSON.stringify(results))
-        })
-    }
-
-})
-
 
 
 /*
