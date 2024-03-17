@@ -3,8 +3,8 @@
 *   Copied from Activity 2 - Connect Webapp to Database on Feburary 22, 2024 (https://canvas.oregonstate.edu/courses/1946034/assignments/9456203)
 */
 
-const username = 'username'
-const password = 'pass'
+const username = 'cs340_phamjus'
+const password = '3853'
 
 // Get an instance of mysql we can use in the app
 var mysql = require('mysql')

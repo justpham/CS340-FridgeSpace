@@ -25,6 +25,48 @@
 
     <h1>Home Page</h1>
 
+    <h2>Overview</h2>
+    <p>
+        As a college household in Corvallis with the issue of food waste and wasted space inside their fridge, Fridge Space is a database-driven website that allows a single household of people to view what they have in their fridge, add or remove grocery items, and give or restrict access to items for their roommates. In many households, groceries at home may be misused or forgotten about if they are not documented. This website should support a household of 1-10 people. An average household can expect to buy $100-300 worth of groceries which can lead to the household tracking 20 - 300 different items simultaneously. For each of these items, groceries can fit into 14 categories: dairy, meat, vegetables, fruits, beverages, snacks, condiments, leftovers, baked goods, breakfast items, baking ingredients, sauces, spices, and others. Lastly, roommates may use groceries for snacking and cooking; this database should track that activity by seeing ~4 logs from each roommate each day (120 logs per month per roommate).
+    </p>
+
+    <p>
+        Fridge Space would like to track grocery items, grocery categories, owner information, and activities that happen between groceries and owners. Grocery items will be stored in an object table called Groceries and will store what it is, the expiration date if it is still remaining, what category it belongs to, and who owns it. Grocery categories will be stored in a category table called Grocery_Categories which will store each unique category of food items that exist. Owner information will be stored in an object table called Owners which will store basic information such as their name and email address. Lastly, activities will be stored in a transaction table called Activity_Logs where it will store who is responsible for an action and what groceries they are involved in that action.
+    </p>
+
+    <table>
+        <tr>
+            <th>Table Name</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>Groceries</td>
+            <td>Records the individual grocery item that is being added to the fridge</td>
+        </tr>
+        <tr>
+            <td>Owners</td>
+            <td>The person who purchased/owns groceries or is responsible for an action</td>
+        </tr>
+        <tr>
+            <td>Activity_Logs</td>
+            <td>A record of logs about who used which item</td>
+        </tr>
+        <tr>
+            <td>Grocery_Categories</td>
+            <td>Record which of the food categories the newly entered grocery is. The categories are dairy, meat, vegetables, fruit, beverages, snacks, condiments, leftovers, baked goods, breakfast items, baking ingredients, sauces and spices, and others.</td>
+        </tr>
+        <tr>
+            <td>Groceries_Owners</td>
+            <td>Acts as an intersection table for the M:M relationship between Owners and Groceries</td>
+        </tr>
+        <tr>
+            <td>Activity_Logs_Groceries</td>
+            <td>Acts as an intersection table for the M:M relationship between Activity_Logs and Groceries</td>
+        </tr>
+
+    </table>
+
+    <p><em>©2024 Justin Pham, Thuy Duyen Doan</em></p>
     
 </body>
 </html>
