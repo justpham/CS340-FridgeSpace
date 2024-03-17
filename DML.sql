@@ -29,7 +29,7 @@ INSERT INTO Groceries (grocery_name, grocery_category, expiration_date)
 VALUES
     (
         :groceryNameInput,
-        (SELECT category_id FROM Grocery_Categories WHERE category_name = :groceryCategoryNameInput),
+        :groceryCategoryIDDropDownSelection,
         :expirationDateInput
     );
 
@@ -110,6 +110,9 @@ VALUES
         :selectedOwnerID
     );
 
+-- Deletes all relationships associated with a grocery id (used in updating a grocery item)
+DELETE FROM Groceries_Owners WHERE grocery_id = :selectedGroceryID
+
 /* 
     Grocery Activity Log (intersection table)
 */
@@ -127,7 +130,8 @@ VALUES
         :selectedGroceryID
     );
 
--- Deletes for Intersection Tables implemented with deleting the respective entities they are for using CASCADE
+-- Deletes all relationships associated with a activity id (used in updating an activity log item)
+DELETE FROM Activity_Logs_Groceries WHERE activity_id = :selectedActivityID
 
 /*
     Drop down lists

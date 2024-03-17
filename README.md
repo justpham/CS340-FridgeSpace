@@ -1,10 +1,8 @@
 
-Citations
 
-1. Citation Scope
-2. Date
-3. Copied
-4. Source
+Website URL: http://flip3.engr.oregonstate.edu:62003/
+
+Citations
 
 db-connector.js
 Entire File's code copied from Activity 2 - Connect webapp to Database on February 22, 2024

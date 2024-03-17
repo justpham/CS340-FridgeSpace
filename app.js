@@ -82,6 +82,8 @@ app.post('/createGroceries', function(req, res){
         console.log("Query 1: ", err, results, fields)
 
         // For each owner for the added grocery, add it to the intersection table
+        // (SELECT MAX(grocery_id) AS max_id FROM Groceries) represents the 
+        // most recently added grocery
         for (owner of ownership)
         {
             var query2 = `INSERT INTO Groceries_Owners (grocery_id, owner_id)
@@ -334,6 +336,7 @@ app.post('/createActivityLog', function(req, res){
     db.pool.query(query1, function (err, results, fields) {
 
         // For each grocery, make a relationship in the activity log grocery intersection table
+        // (SELECT MAX(activity_id) AS max_id FROM Activity_Logs) represents the most recently added activity_log
         for (grocery of groceries) {
             
             var query2 = `INSERT INTO Activity_Logs_Groceries (activity_id, grocery_id)
